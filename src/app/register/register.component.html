@@ -1,0 +1,104 @@
+<h1>Angular Mat Form</h1>
+<div class="form-container">
+    <form [formGroup]="formdata" (ngSubmit)="onClickSubmit(formdata.value)">
+
+        <!-- USERNAME -->
+        <mat-form-field appearance="fill">
+            <mat-label>
+                Username
+            </mat-label>
+            <input matInput placeholder="Enter Your Username" formControlName="userName">
+        </mat-form-field>
+
+        <!-- EMAIL -->
+        <mat-form-field appearance="fill">
+            <mat-label>
+                Email
+            </mat-label>
+            <input matInput type="email" placeholder="Enter Your Email" formControlName="email">
+            <mat-error *ngIf="formdata.controls['email'].invalid && formdata.controls['email'].touched">
+                Email is Required and Email Must Be a Valid Email.
+            </mat-error>
+        </mat-form-field>
+
+
+        <!-- PASSWORD -->
+         <mat-form-field appearance="fill">
+            <mat-label>
+                Password
+            </mat-label>
+            <input matInput type="password" placeholder="Enter Your Password" formControlName="password">
+            <mat-error *ngIf="formdata.controls['password'].invalid && formdata.controls['password'].touched">
+                Password is Required and Must Be At Least 8 Characters.
+            </mat-error>
+         </mat-form-field>
+
+         <!-- RADIO GROUP -->
+         <div class="radio-group">
+            <label class="radio-label">Gender</label>
+            <mat-radio-group formControlName="gender" class="gender-radio-group">
+                <mat-radio-button value="Male">Male</mat-radio-button>
+                <mat-radio-button value="Female">Female</mat-radio-button>
+                <mat-radio-button value="Other">Other</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        
+          <!-- ADDRESS -->
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+                <input matInput placeholder="Enter Your Address" formControlName="address">
+          </mat-form-field>
+
+          <!-- DATE PICKER -->
+          <mat-form-field appearance="fill">
+            <mat-label>Birth Date</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Enter Your Date of Birth" formControlName="birthDate">
+                <mat-datepicker-toggle matTooltip="Select Birth Date from Calender" matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="formdata.get('birthDate')?.hasError('required')">Birth Date is Required.</mat-error>
+          </mat-form-field>
+
+          <!-- SLIDER GROUP -->
+           <div class="slider-group">
+            <label class="slider-label">Angular Skill Level: {{ formdata.get('angularSkillLevel')?.value }}</label>
+            <mat-slider [min]="minSkillLevel" [max]="maxSkillLevel" step="1"  [discrete]="true">
+                <input matSliderThumb formControlName="angularSkillLevel">
+            </mat-slider>
+           </div>
+
+
+
+           <!-- ADDITIONAL -->
+            <!-- CHIPS MODULE -->
+                <mat-label>Developer Stack
+                </mat-label>
+                <mat-chip-listbox>
+                    <mat-chip-option> Frontend </mat-chip-option>
+                    <mat-chip-option> Backend </mat-chip-option>
+                    <mat-chip-option> Fullstack </mat-chip-option>
+                  </mat-chip-listbox>
+
+            <!-- USED matTooltip="Select Birth Date from Calender"  on the Birth Date Field -->
+
+            <!-- CHECKBOX MODULE -->
+            <mat-checkbox formControlName="termsAndConditions" required>
+                I Agree to the Terms and Conditions
+            </mat-checkbox>
+            
+
+           <!-- BUTTON -->
+            <button mat-raised-button color="primary" type="submit" [disabled]="!formdata.valid">Click Here</button>
+    </form>
+
+    <h3 *ngIf="submitted">Your Inputs</h3>
+    <p *ngIf="submitted">
+            Username: {{userName}} <br>
+            Email: {{email}} <br>
+            Password: {{password}} <br>
+            Gender: {{gender}} <br>
+            Address: {{address}} <br>
+            Birth Date: {{birthDate}} <br>
+            Angular Skill Level: {{angularSkillLevel}}
+    </p>
+
+</div>
